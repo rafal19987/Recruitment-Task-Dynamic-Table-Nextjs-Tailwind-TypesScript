@@ -1,4 +1,4 @@
-Live APP
+Live APP https://dynamic-table-project.vercel.app/
 
 ## About
 
@@ -20,7 +20,7 @@ Stack:
 
 Deployment:
 
-- Vercel
+- Vercel https://dynamic-table-project.vercel.app/
 
 Used API:
 
