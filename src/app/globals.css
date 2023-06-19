@@ -1,0 +1,60 @@
+@tailwind base;
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--green) transparent;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 15px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--blue);
+  border-radius: 60px;
+  border: 3px solid var(--body-bg-color-dark);
+}
+
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --body-bg-color-dark: #0a192f;
+  --details-bg-color: #1b3966;
+  --text-dark: #a1c0dd;
+  --grey: #818181;
+  --violet: #7080d6;
+  --green: #64ffda;
+  --blue: #003566;
+  --red: #ff0000;
+  --column-header-bg: #0072ed;
+  --row-bg-primary: #001d3d;
+  --navigate-color: #37a1ff;
+  --navigate-color-hover: #2672b4;
+}
+
+@layer components {
+  .cell-content {
+    padding: 0.5rem;
+    padding-left: 0;
+    color: var(--text-dark);
+    transition: color 0.2s linear;
+  }
+  .cell-content:hover {
+    cursor: pointer;
+    color: var(--violet);
+  }
+  .table-cell {
+    display: table-cell;
+    padding: 1rem;
+  }
+
+  .table-header {
+    display: table-header-group;
+  }
+}
