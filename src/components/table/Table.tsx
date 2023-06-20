@@ -25,7 +25,7 @@ const Table = () => {
     <div className="flex flex-col h-full w-full overflow-auto">
       <table className="w-full border-x border-b border-[var(--blue)]">
         <TableCaption />
-        <thead className="hidden md:table-header sticky top-11 bg-[var(--column-header-bg)] h-14">
+        <thead className="hidden md:table-header sticky top-10 bg-[var(--column-header-bg)] h-14">
           <tr className=" text-lg font-semibold ">
             <ColumnsHeaders />
           </tr>

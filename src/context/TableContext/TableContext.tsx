@@ -2,13 +2,15 @@
 
 import { createContext, useState, useEffect } from 'react';
 import { TSelectedData, TTableContextProvider } from '@/types/types';
+
 import { BASE_API_URL } from '@/constants/constants';
 
 export const TableContext = createContext<any>({
   data: null,
-  path: '',
+  breadcrumb: '',
   isLoading: false,
   isError: false,
+  resetBreadcrumb: () => {},
   getDetailsData: () => {},
   showBooksOfAuthor: () => {},
   showBookDetails: () => {},
@@ -26,35 +28,47 @@ export const TableContextProvider: React.FC<TTableContextProvider> = ({
   const [details, setDetails] = useState<TSelectedData[]>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
-  const [path, setPath] = useState<string | React.ReactNode>('');
+  const [breadcrumb, setBreadcrumb] = useState<string | React.ReactNode>('');
   const [isMounted, setIsMounted] = useState<boolean>(false);
+
+  const resetBreadcrumb = () => {
+    setBreadcrumb('');
+  };
 
   const showBooksOfAuthor = (author: string) => {
     getData(`${BASE_API_URL}?q=inauthor:"${author}"&maxResults=40`);
-    setPath(`${author}`);
+    setBreadcrumb(`${author}`);
+  };
+
+  const getAuthorOfBook = async (bookID: string) => {
+    try {
+      const res = await fetch(`${BASE_API_URL}${bookID}`);
+      const data = await res.json();
+      const author = data.volumeInfo.authors[0];
+      const title = data.volumeInfo.title;
+      setBreadcrumb(
+        <>
+          <button
+            className="py-2 hover:cursor-pointer text-lg text-[var(--navigate-color)] hover:text-[var(--navigate-color-hover)] transition-colors after:content-['/'] after:text-[var(--text-dark)]"
+            onClick={() => showBooksOfAuthor(author)}
+          >
+            {author}
+          </button>
+          <span className="text-lg">{title}</span>
+        </>
+      );
+      if (isError) setIsError(false);
+    } catch (error) {
+      console.error(
+        'Opss, something went wrong with getting author of book: ',
+        error
+      );
+      setIsError(true);
+    }
   };
 
   const showBookDetails = (bookID: string) => {
     getDetails(`${BASE_API_URL}${bookID}`);
-  };
-
-  const getAuthorOfBook = async (bookID: string) => {
-    const res = await fetch(`${BASE_API_URL}${bookID}`);
-    const data = await res.json();
-    const author = data.volumeInfo.authors[0];
-    const title = data.volumeInfo.title;
-    setPath(
-      <>
-        <span
-          className="hover:cursor-pointer underline text-[var(--navigate-color)] hover:text-[var(--navigate-color-hover)] transition-colors"
-          onClick={() => showBooksOfAuthor(author)}
-        >
-          {author}
-        </span>
-        {'/'}
-        {title}
-      </>
-    );
   };
 
   const getDetails = async (url: string): Promise<void> => {
@@ -127,7 +141,8 @@ export const TableContextProvider: React.FC<TTableContextProvider> = ({
     <TableContext.Provider
       value={{
         data,
-        path,
+        breadcrumb,
+        resetBreadcrumb,
         isLoading,
         isError,
         details,
