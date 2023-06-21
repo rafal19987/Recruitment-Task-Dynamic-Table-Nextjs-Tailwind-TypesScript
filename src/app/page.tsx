@@ -1,5 +1,6 @@
 import { TableContextProvider } from '@/context/TableContext/TableContext';
 import Table from '@/components/table/Table';
+import BookDetails from '@/components/bookDetails/BookDetails';
 
 export default function Home() {
   return (
@@ -12,7 +13,10 @@ export default function Home() {
       </div>
       <div className="flex grow justify-center w-full h-full mt-4">
         <TableContextProvider>
-          <Table />
+          <div className="flex flex-col h-full w-full overflow-auto">
+            <Table />
+            <BookDetails />
+          </div>
         </TableContextProvider>
       </div>
     </main>
