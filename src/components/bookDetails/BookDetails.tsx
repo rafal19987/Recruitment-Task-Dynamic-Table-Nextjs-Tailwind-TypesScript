@@ -7,17 +7,18 @@ import DetailHeader from './detailHeader/DetailHeader';
 import Loading from '@/components/loading/Loading';
 import noImageIcon from '@/assets/noImage.svg';
 
-const Details = () => {
+const BookDetails = () => {
   const { details } = useContext(TableContext);
   const [imageIsLoading, setImageIsLoading] = useState<boolean>(true);
-  const { publisher, categories, averageRating, pageCount, thumbnail } =
-    details[0];
 
   const handleImageLoad = () => {
     setImageIsLoading(false);
   };
 
   if (!details) return null;
+
+  const { publisher, categories, averageRating, pageCount, thumbnail } =
+    details;
 
   return (
     <div className="flex text-lg border-x border-b border-[var(--blue)] p-2 pb-8 bg-[var(--details-bg-color)]">
@@ -44,4 +45,4 @@ const Details = () => {
   );
 };
 
-export default Details;
+export default BookDetails;

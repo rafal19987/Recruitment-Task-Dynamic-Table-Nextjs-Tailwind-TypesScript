@@ -3,11 +3,11 @@ export type TSelectedData = {
   title: string | null;
   authors: Array<string> | null;
   publishedDate: string | null;
-  publisher?: string;
+  publisher?: string | null;
   categories?: Array<string>;
-  pageCount?: number;
-  averageRating?: number;
-  thumbnail?: string;
+  pageCount?: number | null;
+  averageRating?: number | null;
+  thumbnail?: string | null;
 };
 
 export type TTableContextProvider = {
